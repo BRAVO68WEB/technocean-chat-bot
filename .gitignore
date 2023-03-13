@@ -1,0 +1,5 @@
+y/.rasa
+y/models/*
+.rasa
+models/*
+myenv/

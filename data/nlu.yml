@@ -1,0 +1,110 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - any one
+    - hey there
+    - let's go
+    - hey dude
+    - good morning
+    - good evening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - see you again
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: venues
+  examples: |
+    - venues
+    - Venues
+    - VENUES
+    - Where it is
+    - Location
+    
+
+- intent: session
+  examples: |
+    - View Session
+    - What Session
+    - Which Session
+    - session
+    - Session
+    - SESSION
+
+- intent: view_information
+  examples: |
+    - View Info
+    - View Information
+    - view info
+    - view information
+    - get information
+    - Get Information
+    - Explain
+    - explain
+
+- intent: dates
+  examples: |
+    - dates
+    - Dates
+    - DATES
+    - date
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you?
+    - Who are you?
+
+- intent: speakers_conference
+  examples: |
+    - Speakers
+    - speakers
+    - SPEAKERS
+    - Who is speaker?
+    - Speaker
+    - SPEAKER
+
+- intent: view_session_speaker1
+  examples: |
+    - View Session
+    - view session
+    - View session
+    - VIEW SESSION
+    - Speaker1
+
+- intent: view_session_speaker2
+  examples: |
+    - View Session
+    - view session
+    - View session
+    - VIEW SESSION
+    - Speaker2
+
+- intent: view_session_speaker3
+  examples: |
+    - View Session
+    - view session
+    - View session
+    - VIEW SESSION
+    - Speaker3
+    - speaker3
