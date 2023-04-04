@@ -1,33 +1,89 @@
 version: "3.1"
 
+actions:
+  - utter_greet
+  - utter_welcome_message
+  - action_event_venue
+  - utter_goodbye
+  - utter_iamabot
+  - utter_event_details
+  - action_event_schedule
+  - action_speakers_list
+  - action_sessions_list
+  - action_speaker_one_details
+  - action_speaker_two_details
+  - action_session_one_details
+  - action_session_two_details
+
 intents:
   - greet
+  - event_venue
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - event_details
+  - event_schedule
+  # - affirm
+  # - deny
+  # - mood_great
+  # - mood_unhappy
+  - iamabot
+  - speakers_list
+  - sessions_list
+  - speaker_one_details
+  - speaker_two_details
+  - session_one_details
+  - session_two_details
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+  utter_greet: 
+    - 
+      text: "Hi buddy, welcome to the Tech Fest chatbot"
+  utter_iamabot: 
+    - 
+      text: "I am a bot, powered by Rasa."
+  utter_goodbye: 
+    - 
+      text: "Goodbye. Talk to you later"
+  utter_event_details: 
+    - 
+      text: "TechNOcean is a tech festival at LPU"
+  utter_welcome_message: 
+    - 
+      buttons: 
+        - 
+          payload: /event_schedule
+          title: Event Schedule
+        - 
+          payload: /event_venue
+          title: Event Venue
+        - 
+          payload: /speakers_list
+          title: List Speakers
+        - 
+          payload: /sessions_list
+          title: List Sessions
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+      text: "What do you want to know about Tech Fest☺️"
 
-  utter_did_that_help:
-  - text: "Did that help you?"
 
-  utter_happy:
-  - text: "Great, carry on!"
+# responses:
+#   utter_greet:
+#   - text: "Hey! How are you?"
 
-  utter_goodbye:
-  - text: "Bye"
+#   utter_cheer_up:
+#   - text: "Here is something to cheer you up:"
+#     image: "https://i.imgur.com/nGF1K8f.jpg"
 
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+#   utter_did_that_help:
+#   - text: "Did that help you?"
+
+#   utter_happy:
+#   - text: "Great, carry on!"
+
+#   utter_goodbye:
+#   - text: "Bye"
+
+#   utter_iamabot:
+#   - text: "I am a bot, powered by Rasa."
 
 session_config:
   session_expiration_time: 60

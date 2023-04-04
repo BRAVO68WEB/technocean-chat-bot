@@ -62,6 +62,16 @@ pip3 install rasa[spacy]
 python3 -m spacy download en_core_web_md
 ```
 
+## Run Project
+- To train the project
+rasa train
+- To start the project in terminal
+rasa shell
+- To start the project
+rasa run
+- To start the project and avoid cors policy error
+rasa run --cors "*"
+
 ## Author
 
 👤 **GDSC LPU**
