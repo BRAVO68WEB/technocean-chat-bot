@@ -26,11 +26,17 @@
 #
 #         return []
 from typing import Dict, Text, Any, List, Union, Optional
+import yaml
+from yaml.loader import SafeLoader
 
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 from rasa_sdk import Action
+
+# Load data
+with open('event.yml') as f:
+    data = yaml.load(f, Loader=SafeLoader)
 
 class EventVenue(Action):
  def name(self):
@@ -38,34 +44,23 @@ class EventVenue(Action):
   return "action_event_venue"
 
  def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Shanti Mittal Auditorium",
-                            "subtitle": "Inside LPU campus",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/speakers_list",
-                                    "title": "List Speakers"
-                                },
-                                {
-                                    "type": "postback",
-                                    "payload": "/sessions_list",
-                                    "title": "List Sessions"
-                                },
-                                
-                            ]
-                        },
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
+  
+  text = "{} takes place in {}".format(data.get("name"), data.get("venue"))
+  btn_opt = [
+                {
+                    "type": "postback",
+                    "payload": "/speakers_list",
+                    "title": "List Speakers"
+                },
+                {
+                    "type": "postback",
+                    "payload": "/sessions_list",
+                    "title": "List Sessions"
+                },
+                
+            ]
+  
+  dispatcher.utter_message(text=text, buttons=btn_opt)
   return []
 
 class EventSchedule(Action):
@@ -74,35 +69,22 @@ class EventSchedule(Action):
   return "action_event_schedule"
 
  def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Event Schedule",
-                            "subtitle": "Date and Time of event",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/session_one_details",
-                                    "title": "Session One details"
-                                },
-                                {
-                                    "type": "postback",
-                                    "payload": "/session_two_details",
-                                    "title": "Session Two detail"
-                                },
-                                
-                            ],
-                            "text": "The event runs from 13 to 15 April, 2023. Select a session to get its date and time"
-                        },
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
+  
+  text = "The event runs from {}. Select a session to get its date and time".format(data.get("date"))
+  btn_opt = [
+                {
+                    "type": "postback",
+                    "payload": "/session_one_details",
+                    "title": "Session One details"
+                },
+                {
+                    "type": "postback",
+                    "payload": "/session_two_details",
+                    "title": "Session Two detail"
+                },
+            ]
+  
+  dispatcher.utter_message(text=text, buttons=btn_opt)
   return []
 
 class SpeakersList(Action):
@@ -111,6 +93,21 @@ class SpeakersList(Action):
   return "action_speakers_list"
 
  def run(self,dispatcher,tracker,domain):
+  ext = "The event runs from {}. Select a session to get its date and time".format(data.get("date"))
+  btn_opt = [
+                {
+                    "type": "postback",
+                    "payload": "/session_one_details",
+                    "title": "Session One details"
+                },
+                {
+                    "type": "postback",
+                    "payload": "/session_two_details",
+                    "title": "Session Two detail"
+                },
+            ]
+  
+  dispatcher.utter_message(text=text, buttons=btn_opt)
   gt = {
             "attachment": {
                 "type": "template",
@@ -145,7 +142,7 @@ class SpeakersList(Action):
                 }
             }
         }
-  dispatcher.utter_custom_json(gt)
+  dispatcher.utter_message(json_message=gt)
   return []
 
 class SessionsList(Action):
@@ -154,39 +151,18 @@ class SessionsList(Action):
   return "action_sessions_list"
 
  def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Session 1",
-                            "subtitle": "Importance of chat gpt",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/session_one_details",
-                                    "title": "View Details"
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Session 2",
-                            "subtitle": "Build chat GPT",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/session_two_details",
-                                    "title": "View Details"
-                                }
-                            ]
-                        },
-                    ]
-                }
+  text = "Below is the list of the sessions. Select a session to view more detals"
+  btn_opt = []
+  sessions = data.get('sessions')
+  for session in sessions:
+    sess = {
+                "type": "postback",
+                "payload": "/session_details/{}".format(session.get('title')),
+                "title": session.get('title')
             }
-        }
-  dispatcher.utter_custom_json(gt)
+    btn_opt.append(sess)
+  
+  dispatcher.utter_message(text=text, buttons=btn_opt)
   return []
  
 class SpeakerOneDetails(Action):

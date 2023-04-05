@@ -10,10 +10,8 @@ actions:
   - action_event_schedule
   - action_speakers_list
   - action_sessions_list
-  - action_speaker_one_details
-  - action_speaker_two_details
-  - action_session_one_details
-  - action_session_two_details
+  - action_speaker_details
+  - action_session_details
 
 intents:
   - greet
@@ -28,15 +26,13 @@ intents:
   - iamabot
   - speakers_list
   - sessions_list
-  - speaker_one_details
-  - speaker_two_details
-  - session_one_details
-  - session_two_details
+  - speaker_details
+  - session_details
 
 responses:
   utter_greet: 
     - 
-      text: "Hi buddy, welcome to the Tech Fest chatbot"
+      text: "Hello 😀, welcome to the Tech Fest chatbot"
   utter_iamabot: 
     - 
       text: "I am a bot, powered by Rasa."
