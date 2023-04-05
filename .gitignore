@@ -3,3 +3,4 @@ y/models/*
 .rasa
 models/*
 myenv/
+graph.html
