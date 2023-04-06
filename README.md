@@ -88,6 +88,12 @@ rasa run
 rasa run --cors "*"
 ```
 
+- To run the actions, run this command in another terminal
+
+```sh
+rasa run action
+```
+
 ## Author
 
 👤 **GDSC LPU**
