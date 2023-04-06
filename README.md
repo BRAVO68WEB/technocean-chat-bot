@@ -91,7 +91,7 @@ rasa run --cors "*"
 - To run the actions, run this command in another terminal
 
 ```sh
-rasa run action
+rasa run actions
 ```
 
 ## Author
