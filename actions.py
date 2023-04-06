@@ -46,21 +46,8 @@ class EventVenue(Action):
  def run(self,dispatcher,tracker,domain):
   
   text = "{} takes place in {}".format(data.get("name"), data.get("venue"))
-  btn_opt = [
-                {
-                    "type": "postback",
-                    "payload": "/speakers_list",
-                    "title": "List Speakers"
-                },
-                {
-                    "type": "postback",
-                    "payload": "/sessions_list",
-                    "title": "List Sessions"
-                },
-                
-            ]
   
-  dispatcher.utter_message(text=text, buttons=btn_opt)
+  dispatcher.utter_message(text=text)
   return []
 
 class EventSchedule(Action):
@@ -71,18 +58,15 @@ class EventSchedule(Action):
  def run(self,dispatcher,tracker,domain):
   
   text = "The event runs from {}. Select a session to get its date and time".format(data.get("date"))
-  btn_opt = [
-                {
-                    "type": "postback",
-                    "payload": "/session_one_details",
-                    "title": "Session One details"
-                },
-                {
-                    "type": "postback",
-                    "payload": "/session_two_details",
-                    "title": "Session Two detail"
-                },
-            ]
+  btn_opt = []
+  sessions = data.get('sessions')
+  for session in sessions:
+    sess = {
+                "type": "postback",
+                "payload": '/session_details{"session_id":"'+session.get('session_id')+'"}',
+                "title": session.get('title')
+            }
+    btn_opt.append(sess)
   
   dispatcher.utter_message(text=text, buttons=btn_opt)
   return []
@@ -93,56 +77,18 @@ class SpeakersList(Action):
   return "action_speakers_list"
 
  def run(self,dispatcher,tracker,domain):
-  ext = "The event runs from {}. Select a session to get its date and time".format(data.get("date"))
-  btn_opt = [
-                {
-                    "type": "postback",
-                    "payload": "/session_one_details",
-                    "title": "Session One details"
-                },
-                {
-                    "type": "postback",
-                    "payload": "/session_two_details",
-                    "title": "Session Two detail"
-                },
-            ]
+  text = "Below is the list of the speakers. Select a speaker to view more detals"
+  btn_opt = []
+  speakers = data.get('speakers')
+  for speaker in speakers:
+    speak = {
+                "type": "postback",
+                "payload": '/speaker_details{"speaker_id":"'+speaker.get('speaker_id')+'"}',
+                "title": speaker.get('name')
+            }
+    btn_opt.append(speak)
   
   dispatcher.utter_message(text=text, buttons=btn_opt)
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "John Doe 1",
-                            "image_url":"https://www.accenture.com/gb-en/_acnmedia/Accenture/Conversion-Assets/DotCom/Images/Global-3/27/Accenture-Human-Machine-AI-James.png",
-                            "subtitle": "Software Engineer",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/speakers_one_details",
-                                    "title": "View Details"
-                                }
-                            ]
-                        },
-                        {
-                            "title": "John Doe 2",
-                            "image_url":"https://www.accenture.com/gb-en/_acnmedia/Accenture/Conversion-Assets/DotCom/Images/Global-3/27/Accenture-Human-Machine-AI-James.png",
-                            "subtitle": "Software Engineer",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "payload": "/speakers_two_details",
-                                    "title": "View Details"
-                                }
-                            ]
-                        },
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_message(json_message=gt)
   return []
 
 class SessionsList(Action):
@@ -157,7 +103,7 @@ class SessionsList(Action):
   for session in sessions:
     sess = {
                 "type": "postback",
-                "payload": "/session_details/{}".format(session.get('title')),
+                "payload": '/session_details{"session_id":"'+session.get('session_id')+'"}',
                 "title": session.get('title')
             }
     btn_opt.append(sess)
@@ -165,112 +111,33 @@ class SessionsList(Action):
   dispatcher.utter_message(text=text, buttons=btn_opt)
   return []
  
-class SpeakerOneDetails(Action):
+class SpeakerDetails(Action):
  def name(self):
   """name of the custom action"""
-  return "action_speaker_one_details"
+  return "action_speaker_details"
 
  def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "John Doe 1",
-                            "image_url":"https://www.accenture.com/gb-en/_acnmedia/Accenture/Conversion-Assets/DotCom/Images/Global-3/27/Accenture-Human-Machine-AI-James.png",
-                            "subtitle": "Software Engineer",
-                            "text": "His details will be written here"
-                        }
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
+  speaker_id = tracker.get_slot("speaker_id")
+  speaker = next((item for item in data.get('speakers') if item["speaker_id"] == speaker_id), None)
+  text = "Name: {}\nDesignation: {}\n{}".format(speaker.get('name'), speaker.get('designation'), speaker.get('details'))
+  dispatcher.utter_message(text=text, image=speaker.get('img_url'))
+  dispatcher.utter_message(response="utter_ask_whatelse")
   return []
 
-class SpeakerTwoDetails(Action):
+class SessionDetails(Action):
  def name(self):
   """name of the custom action"""
-  return "action_speaker_two_details"
+  return "action_session_details"
 
  def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "John Doe 2",
-                            "image_url":"https://www.accenture.com/gb-en/_acnmedia/Accenture/Conversion-Assets/DotCom/Images/Global-3/27/Accenture-Human-Machine-AI-James.png",
-                            "subtitle": "Software Engineer",
-                            "text": "His details will be written here"
-                        }
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
-  return []
-
-class SessionOneDetails(Action):
- def name(self):
-  """name of the custom action"""
-  return "action_session_one_details"
-
- def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Session 1",
-                            "subtitle": "Importance of chat gpt",
-                            # "buttons": [
-                            #     {
-                            #         "type": "postback",
-                            #         "payload": "/session_one_details",
-                            #         "title": "View Details"
-                            #     }
-                            # ]
-                        }
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
-  return []
-
-class SessionTwoDetails(Action):
- def name(self):
-  """name of the custom action"""
-  return "action_session_two_details"
-
- def run(self,dispatcher,tracker,domain):
-  gt = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Session 2",
-                            "subtitle": "Building chat gpt",
-                            # "buttons": [
-                            #     {
-                            #         "type": "postback",
-                            #         "payload": "/session_one_details",
-                            #         "title": "View Details"
-                            #     }
-                            # ]
-                        }
-                    ]
-                }
-            }
-        }
-  dispatcher.utter_custom_json(gt)
+  session_id = tracker.get_slot("session_id")
+  session = next((item for item in data.get('sessions') if item["session_id"] == session_id), None)
+  text = "Title: {}\nVenue: {}\nDate: {}\nTime: {}\nSpeaker: {}".format(session.get('title'), session.get('venue'), session.get('date'), session.get('time'), session.get('speaker'))
+  speaker_id = session.get('speaker_id')
+  btn_opt = [{
+                "type": "postback",
+                "payload": '/speaker_details{"speaker_id":"'+speaker_id+'"}',
+                "title": "View Speaker Info"
+            }]
+  dispatcher.utter_message(text=text, buttons=btn_opt)
   return []

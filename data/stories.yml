@@ -2,107 +2,67 @@ version: "3.1"
 
 stories:
 
-- story: welcome path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
-
 - story: event details
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: event_details
   - action: utter_event_details
 
 - story: event venue
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: event_venue
   - action: action_event_venue
 
 - story: event schedule
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: event_schedule
   - action: action_event_schedule
 
 - story: sessions list
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: sessions_list
   - action: action_sessions_list
 
-- story: session one
+- story: session details
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: sessions_list
   - action: action_sessions_list
-  - intent: session_one_details
-  - action: action_session_one_details
-
-- story: session two
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
-  - intent: sessions_list
-  - action: action_sessions_list
-  - intent: session_two_details
-  - action: action_session_two_details
+  - intent: session_details
+  - action: action_session_details
 
 - story: speakers list
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: speakers_list
   - action: action_speakers_list
 
-- story: speaker one
+- story: speaker details
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
   - intent: speakers_list
   - action: action_speakers_list
-  - intent: speaker_one_details
-  - action: action_speaker_one_details
-
-- story: speaker two
+  - intent: speaker_details
+  - action: action_speaker_details
+  
+- story: talk to human & affirm
   steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_welcome_message
-  - intent: speakers_list
-  - action: action_speakers_list
-  - intent: speaker_two_details
-  - action: action_speaker_two_details
-
-# - story: sad path 1
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: mood_unhappy
-#   - action: utter_cheer_up
-#   - action: utter_did_that_help
-#   - intent: affirm
-#   - action: utter_happy
-
-# - story: sad path 2
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: mood_unhappy
-#   - action: utter_cheer_up
-#   - action: utter_did_that_help
-#   - intent: deny
-#   - action: utter_goodbye
+  - intent: human_handoff
+  - action: utter_ask_handoff
+  - intent: affirm
+  - action: utter_handoff
+  
+- story: talk to human & deny
+  steps:
+  - intent: human_handoff
+  - action: utter_ask_handoff
+  - intent: deny
+  - action: utter_ask_whatelse
+  
+- story: ask if user has more questions & affirm
+  steps:
+  - action: utter_ask_whatelse
+  - intent: affirm
+  - action: utter_give_options
+  
+- story: ask if user has more questions & deny
+  steps:
+  - action: utter_ask_whatelse
+  - intent: deny
+  - action: utter_goodbye
