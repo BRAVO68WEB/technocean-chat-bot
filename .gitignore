@@ -1,5 +1,6 @@
-y/.rasa
-y/models/*
 .rasa
-models/*
+models/
 myenv/
+results/
+**/.DS_Store
+**/__pycache__

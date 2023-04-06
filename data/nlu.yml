@@ -13,15 +13,13 @@ nlu:
     - hey there
     - let's go
     - hey dude
-    - good morning
-    - good evening
     - good afternoon
 
 - intent: goodbye
   examples: |
     - see you again
     - good by
-    - cee you later
+    - see you later
     - good night
     - bye
     - goodbye
@@ -30,16 +28,16 @@ nlu:
     - bye bye
     - see you later
 
-- intent: venues
+- intent: event_venue
   examples: |
     - venues
-    - Venues
-    - VENUES
     - Where it is
     - Location
+    - Where will the event take place
+    - Where is the venue
     
 
-- intent: session
+- intent: sessions_list
   examples: |
     - View Session
     - What Session
@@ -48,7 +46,7 @@ nlu:
     - Session
     - SESSION
 
-- intent: view_information
+- intent: event_details
   examples: |
     - View Info
     - View Information
@@ -58,15 +56,17 @@ nlu:
     - Get Information
     - Explain
     - explain
+    - what is the event details?
+    - what is the event about?
 
-- intent: dates
+- intent: event_schedule
   examples: |
-    - dates
-    - Dates
-    - DATES
-    - date
+    - dates of event
+    - time of event
+    - When is it
+    - When will it start
 
-- intent: bot_challenge
+- intent: iamabot
   examples: |
     - are you a bot?
     - are you a human?
@@ -75,36 +75,34 @@ nlu:
     - who are you?
     - Who are you?
 
-- intent: speakers_conference
+- intent: speakers_list
   examples: |
-    - Speakers
+    - Speaker for session
     - speakers
-    - SPEAKERS
-    - Who is speaker?
-    - Speaker
-    - SPEAKER
+    - Who are the speakers?
+    - who will speak?
 
-- intent: view_session_speaker1
-  examples: |
-    - View Session
-    - view session
-    - View session
-    - VIEW SESSION
-    - Speaker1
+# - intent: view_session_speaker1
+#   examples: |
+#     - View Session
+#     - view session
+#     - View session
+#     - VIEW SESSION
+#     - Speaker1
 
-- intent: view_session_speaker2
-  examples: |
-    - View Session
-    - view session
-    - View session
-    - VIEW SESSION
-    - Speaker2
+# - intent: view_session_speaker2
+#   examples: |
+#     - View Session
+#     - view session
+#     - View session
+#     - VIEW SESSION
+#     - Speaker2
 
-- intent: view_session_speaker3
-  examples: |
-    - View Session
-    - view session
-    - View session
-    - VIEW SESSION
-    - Speaker3
-    - speaker3
+# - intent: view_session_speaker3
+#   examples: |
+#     - View Session
+#     - view session
+#     - View session
+#     - VIEW SESSION
+#     - Speaker3
+#     - speaker3
