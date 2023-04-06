@@ -2,29 +2,67 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: event details
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - intent: event_details
+  - action: utter_event_details
 
-- story: sad path 1
+- story: event venue
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - intent: event_venue
+  - action: action_event_venue
+
+- story: event schedule
+  steps:
+  - intent: event_schedule
+  - action: action_event_schedule
+
+- story: sessions list
+  steps:
+  - intent: sessions_list
+  - action: action_sessions_list
+
+- story: session details
+  steps:
+  - intent: sessions_list
+  - action: action_sessions_list
+  - intent: session_details
+  - action: action_session_details
+
+- story: speakers list
+  steps:
+  - intent: speakers_list
+  - action: action_speakers_list
+
+- story: speaker details
+  steps:
+  - intent: speakers_list
+  - action: action_speakers_list
+  - intent: speaker_details
+  - action: action_speaker_details
+  
+- story: talk to human & affirm
+  steps:
+  - intent: human_handoff
+  - action: utter_ask_handoff
   - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
+  - action: utter_handoff
+  
+- story: talk to human & deny
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - intent: human_handoff
+  - action: utter_ask_handoff
+  - intent: deny
+  - action: utter_ask_whatelse
+  
+- story: ask if user has more questions & affirm
+  steps:
+  - action: utter_ask_whatelse
+  - intent: affirm
+  - action: utter_give_options
+  
+- story: ask if user has more questions & deny
+  steps:
+  - action: utter_ask_whatelse
   - intent: deny
   - action: utter_goodbye

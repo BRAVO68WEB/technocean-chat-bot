@@ -2,12 +2,41 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Confirm that the bot is not a human
+  steps:
+  - intent: check_human
+  - action: utter_bot
+  
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+  - action: utter_give_options
+
+- rule: answer out of scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+    
+- rule: greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - action: utter_give_options
+
+- rule: say goodbye
   steps:
   - intent: goodbye
   - action: utter_goodbye
-
-- rule: Say 'I am a bot' anytime the user challenges
+  
+- rule: help
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: help
+  - action: utter_help
+  - action: utter_give_options
+
+- rule: thankyou
+  steps:
+  - intent: thankyou
+  - action: utter_noworries

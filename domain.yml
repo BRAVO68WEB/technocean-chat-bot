@@ -1,33 +1,103 @@
 version: "3.1"
 
+actions:
+  - action_event_venue
+  - action_event_schedule
+  - action_speakers_list
+  - action_sessions_list
+  - action_speaker_details
+  - action_session_details
+
 intents:
   - greet
+  - event_venue
   - goodbye
+  - event_details
+  - event_schedule
+  - check_human
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - thankyou
+  - iamabot
+  - speakers_list
+  - sessions_list
+  - speaker_details
+  - session_details
+  - out_of_scope
+  - session_start
+  - restart
+  - trigger_handoff
+  - handoff
+  - human_handoff
+  - help
+  - nlu_fallback
+  - ask_whatelse
+  - give_options
+
+entities:
+- session_id
+- speaker_id
+
+slots:
+  session_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: session_id
+  speaker_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: speaker_id
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_greet: 
+    - 
+      text: "Hello 😀, welcome to the Tech Fest chatbot"
+  utter_bot: 
+    - 
+      text: "I am a bot, powered by Rasa."
+  utter_goodbye: 
+    - 
+      text: "Goodbye. Talk to you later"
+  utter_event_details: 
+    - 
+      text: "TechNOcean is a tech festival at LPU"
+  utter_out_of_scope:
+  - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
+  utter_noworries:
+  - text: You're welcome :)
+  utter_ok:
+  - text: 👍
+  utter_ask_continue:
+  - text: Would you like to continue?
+  utter_default:
+  - text: I didn't quite understand that. Could you rephrase?
+  utter_ask_handoff:
+  - text: It looks like you want to talk to a human agent.
+  utter_handoff:
+  - text: If you have any other queries, send to ddd@gmail.com.
+  utter_ask_whatelse:
+  - text: Can I help you with anything else?
+  utter_help:
+  - text: "I can help you with details of this event. \nYou can ask me things like: \n- What date is the event? \n- Which venue is it \n- What are the available sessions? \n- Who are the available speakers"
+  utter_give_options:
+  - text: "You may select an option below"
+    buttons: 
+      - 
+        payload: /event_schedule
+        title: Event Schedule
+      - 
+        payload: /event_venue
+        title: Event Venue
+      - 
+        payload: /speakers_list
+        title: List Speakers
+      - 
+        payload: /sessions_list
+        title: List Sessions
 
 session_config:
   session_expiration_time: 60
