@@ -19,7 +19,7 @@ sessions:
   -
     session_id: session1
     title: first session
-    venue: Shanti Mittal Hall
+    venue: Shanti Devi Mittal Auditorium
     date: Apr 13
     time: 9am - 2pm
     speaker: *jd
