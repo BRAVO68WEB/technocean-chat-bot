@@ -1,12 +1,15 @@
 version: "3.1"
 
 actions:
+  - action_event_details
   - action_event_venue
   - action_event_schedule
   - action_speakers_list
   - action_sessions_list
+  - action_hackathons_list
   - action_speaker_details
   - action_session_details
+  - action_hackathon_details
 
 intents:
   - greet
@@ -21,8 +24,10 @@ intents:
   - iamabot
   - speakers_list
   - sessions_list
+  - hackathons_list
   - speaker_details
   - session_details
+  - hackathon_details
   - out_of_scope
   - session_start
   - restart
@@ -37,6 +42,7 @@ intents:
 entities:
 - session_id
 - speaker_id
+- hackathon_id
 
 slots:
   session_id:
@@ -51,20 +57,26 @@ slots:
     mappings:
     - type: from_entity
       entity: speaker_id
+  hackathon_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: hackathon_id
 
 responses:
   utter_greet: 
     - 
-      text: "Hello 😀, welcome to the Tech Fest chatbot"
+      text: "Hello 😀, welcome to the TechnOcean chatbot"
   utter_bot: 
     - 
       text: "I am a bot, powered by Rasa."
   utter_goodbye: 
     - 
-      text: "Goodbye. Talk to you later"
+      text: "Goodbye. Have a nice day"
   utter_event_details: 
     - 
-      text: "TechNOcean is a tech festival at LPU"
+      text: TechnOcean is a three-day tech fest hosted by the School of Computer Science at Lovely Professional University, with a theme of "Learn. Build. Present." This unique event brings together students, professionals, and industry experts to explore the latest trends and innovations in technology. Through a series of hackathons, workshops, and sessions, participants will have the opportunity to learn new skills, build innovative solutions, and present their ideas to potential investors, partners, and customers. With a focus on creativity, collaboration, and community, TechnOcean is a platform for aspiring tech innovators and entrepreneurs to unleash their potential, gain hands-on experience working on real-world projects, and make a positive impact in the world.
   utter_out_of_scope:
   - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
   utter_noworries:
@@ -85,7 +97,10 @@ responses:
   - text: "I can help you with details of this event. \nYou can ask me things like: \n- What date is the event? \n- Which venue is it \n- What are the available sessions? \n- Who are the available speakers"
   utter_give_options:
   - text: "You may select an option below"
-    buttons: 
+    buttons:  
+      - 
+        payload: /event_details
+        title: Event Info
       - 
         payload: /event_schedule
         title: Event Schedule
@@ -98,6 +113,9 @@ responses:
       - 
         payload: /sessions_list
         title: List Sessions
+      - 
+        payload: /hackathons_list
+        title: List Hackathons
 
 session_config:
   session_expiration_time: 60

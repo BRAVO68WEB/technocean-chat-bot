@@ -312,3 +312,14 @@ nlu:
     - View session
     - VIEW SESSION
     - first session
+
+- intent: list_hackathons
+  examples: |
+    - View hackathons
+    - view hackathon
+    - List hackathons
+    - list hackathon
+    - Hackathons
+    - Hackathon
+    - hackathons
+    - hackathon

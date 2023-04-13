@@ -40,6 +40,18 @@ stories:
   - action: action_speakers_list
   - intent: speaker_details
   - action: action_speaker_details
+
+- story: hackathons list
+  steps:
+  - intent: hackathons_list
+  - action: action_hackathons_list
+
+- story: hackathon details
+  steps:
+  - intent: hackathons_list
+  - action: action_hackathons_list
+  - intent: hackathon_details
+  - action: action_hackathon_details
   
 - story: talk to human & affirm
   steps:
