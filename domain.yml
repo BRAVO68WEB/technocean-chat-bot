@@ -1,17 +1,15 @@
 version: "3.1"
 
 actions:
-  - utter_greet
-  - utter_welcome_message
+  - action_event_details
   - action_event_venue
-  - utter_goodbye
-  - utter_iamabot
-  - utter_event_details
   - action_event_schedule
   - action_speakers_list
   - action_sessions_list
+  - action_hackathons_list
   - action_speaker_details
   - action_session_details
+  - action_hackathon_details
 
 intents:
   - greet
@@ -19,67 +17,105 @@ intents:
   - goodbye
   - event_details
   - event_schedule
-  # - affirm
-  # - deny
-  # - mood_great
-  # - mood_unhappy
+  - check_human
+  - affirm
+  - deny
+  - thankyou
   - iamabot
   - speakers_list
   - sessions_list
+  - hackathons_list
   - speaker_details
   - session_details
+  - hackathon_details
+  - out_of_scope
+  - session_start
+  - restart
+  - trigger_handoff
+  - handoff
+  - human_handoff
+  - help
+  - nlu_fallback
+  - ask_whatelse
+  - give_options
+
+entities:
+- session_id
+- speaker_id
+- hackathon_id
+
+slots:
+  session_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: session_id
+  speaker_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: speaker_id
+  hackathon_id:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: hackathon_id
 
 responses:
   utter_greet: 
     - 
-      text: "Hello 😀, welcome to the Tech Fest chatbot"
-  utter_iamabot: 
+      text: "Hello 😀, welcome to the TechnOcean chatbot"
+  utter_bot: 
     - 
       text: "I am a bot, powered by Rasa."
   utter_goodbye: 
     - 
-      text: "Goodbye. Talk to you later"
+      text: "Goodbye. Have a nice day"
   utter_event_details: 
     - 
-      text: "TechNOcean is a tech festival at LPU"
-  utter_welcome_message: 
-    - 
-      buttons: 
-        - 
-          payload: /event_schedule
-          title: Event Schedule
-        - 
-          payload: /event_venue
-          title: Event Venue
-        - 
-          payload: /speakers_list
-          title: List Speakers
-        - 
-          payload: /sessions_list
-          title: List Sessions
-
-      text: "What do you want to know about Tech Fest☺️"
-
-
-# responses:
-#   utter_greet:
-#   - text: "Hey! How are you?"
-
-#   utter_cheer_up:
-#   - text: "Here is something to cheer you up:"
-#     image: "https://i.imgur.com/nGF1K8f.jpg"
-
-#   utter_did_that_help:
-#   - text: "Did that help you?"
-
-#   utter_happy:
-#   - text: "Great, carry on!"
-
-#   utter_goodbye:
-#   - text: "Bye"
-
-#   utter_iamabot:
-#   - text: "I am a bot, powered by Rasa."
+      text: TechnOcean is a three-day tech fest hosted by the School of Computer Science at Lovely Professional University, with a theme of "Learn. Build. Present." This unique event brings together students, professionals, and industry experts to explore the latest trends and innovations in technology. Through a series of hackathons, workshops, and sessions, participants will have the opportunity to learn new skills, build innovative solutions, and present their ideas to potential investors, partners, and customers. With a focus on creativity, collaboration, and community, TechnOcean is a platform for aspiring tech innovators and entrepreneurs to unleash their potential, gain hands-on experience working on real-world projects, and make a positive impact in the world.
+  utter_out_of_scope:
+  - text: Sorry, I'm not sure how to respond to that. Type "help" for assistance.
+  utter_noworries:
+  - text: You're welcome :)
+  utter_ok:
+  - text: 👍
+  utter_ask_continue:
+  - text: Would you like to continue?
+  utter_default:
+  - text: I didn't quite understand that. Could you rephrase?
+  utter_ask_handoff:
+  - text: It looks like you want to talk to a human agent.
+  utter_handoff:
+  - text: If you have any other queries, send to ddd@gmail.com.
+  utter_ask_whatelse:
+  - text: Can I help you with anything else?
+  utter_help:
+  - text: "I can help you with details of this event. \nYou can ask me things like: \n- What date is the event? \n- Which venue is it \n- What are the available sessions? \n- Who are the available speakers"
+  utter_give_options:
+  - text: "You may select an option below"
+    buttons:  
+      - 
+        payload: /event_details
+        title: Event Info
+      - 
+        payload: /event_schedule
+        title: Event Schedule
+      - 
+        payload: /event_venue
+        title: Event Venue
+      - 
+        payload: /speakers_list
+        title: List Speakers
+      - 
+        payload: /sessions_list
+        title: List Sessions
+      - 
+        payload: /hackathons_list
+        title: List Hackathons
 
 session_config:
   session_expiration_time: 60
